@@ -51,16 +51,22 @@
             <div class="w-full max-w-6xl bg-[#D9C5B2] rounded-[40px] p-6 md:p-10 shadow-inner border-[10px] border-[#C4B2A2] min-h-[600px]">
                 
                 <div id="items-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <div class="item-card bg-white found rotate-1">
+                    <div class="item-card bg-white found rotate-1 flex flex-col">
                         <div class="status-tag bg-green-400 text-white">Found</div>
                         <p class="text-xl font-semibold">Kunci Motor</p>
                         <span class="text-sm text-gray-500">Lokasi: Kantin Teknik</span>
+                        <div class="mt-auto pt-2 border-t border-dashed border-gray-100">
+                            <span class="text-[10px] text-gray-400 font-mono italic"> 11 Jan, 10:00</span>
+                        </div>
                     </div>
 
-                    <div class="item-card bg-white lost -rotate-2">
+                    <div class="item-card bg-white lost -rotate-2 flex flex-col">
                         <div class="status-tag bg-red-400 text-white">Lost</div>
                         <p class="text-xl font-semibold">Tumblr Biru</p>
                         <span class="text-sm text-gray-500">Lokasi: Perpus Pusat</span>
+                        <div class="mt-auto pt-2 border-t border-dashed border-gray-100">
+                            <span class="text-[10px] text-gray-400 font-mono italic"> 11 Jan, 14:20</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,8 +89,12 @@
                         
                         <h2 id="detail-name" class="text-3xl font-bold text-gray-800 mb-2"></h2>
                         
-                        <p id="detail-location" class="text-[#A890A6] font-semibold mb-6 flex items-center gap-2">
+                        <p id="detail-location" class="text-[#A890A6] font-semibold mb-2 flex items-center gap-2">
                             📍 <span></span>
+                        </p>
+
+                        <p id="detail-time" class="text-xs text-gray-400 font-mono mb-6 italic flex items-center gap-2">
+                            <span></span>
                         </p>
 
                         <div class="space-y-2">
@@ -135,9 +145,12 @@
                                 <span class="text-3xl">📷</span>
                                 <p class="text-sm font-semibold">Add Photo</p>
                             </div>
-                            <input type="text" placeholder="Item Name..." class="w-full border-b-2 border-gray-100 py-2 focus:outline-none focus:border-[#A890A6] font-semibold text-lg">
-                            <input type="text" placeholder="Location..." class="w-full border-b-2 border-gray-100 py-2 focus:outline-none focus:border-[#A890A6] text-lg">
-                            <textarea placeholder="Description & Contact..." rows="3" class="w-full bg-gray-50 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-[#A890A6]/20 text-lg"></textarea>
+
+                            <input type="text" id="input-item-name" placeholder="Item Name..." class="w-full border-b-2 border-gray-100 py-2 focus:outline-none focus:border-[#A890A6] font-semibold text-lg" required>
+                            
+                            <input type="text" id="input-item-location" placeholder="Location..." class="w-full border-b-2 border-gray-100 py-2 focus:outline-none focus:border-[#A890A6] text-lg" required>
+                            
+                            <textarea id="input-item-desc" placeholder="Description & Contact..." rows="3" class="w-full bg-gray-50 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-[#A890A6]/20 text-lg"></textarea>
                             
                             <button type="submit" id="submit-btn" class="w-full text-white py-4 rounded-full mt-4 text-xl font-bold shadow-lg transition-all uppercase tracking-widest">
                                 POSTING
