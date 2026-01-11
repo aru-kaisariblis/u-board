@@ -1,0 +1,247 @@
+/* Definisi Warna dan Font */
+    :root {
+        --maroon-unhas: #800000;
+        --bg-yellow: #FFF9C4;
+        --bg-blue: #E0F2FE;
+        --bg-grey: #efefef;
+        --card-blue: #C3E2FF;
+        --card-pink: #F9C7E3;
+    }
+/*INDEX
+    /* Gradasi Background sesuai Canva */
+    .main-gradient {
+        background: linear-gradient(to bottom, var(--bg-yellow), var(--bg-blue));
+    }
+
+    .text-maroon-unhas {
+        color: var(--maroon-unhas);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /*header*/
+    /* Gaya Logo U-Board */
+    .logo-u-board {
+        font-family: 'goudy stout', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #800000;
+        opacity: 0.8;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Gaya Tombol Navigasi Hamburger (=) */
+    .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        color: #800000;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .bar {
+        width: 35px;
+        height: 5px;
+        background-color: #800000;
+        border-radius: 10px;
+    }
+
+    /* Efek Hover agar interaktif */
+    .nav-toggle:hover .bar {
+        background-color: #800000;
+    }
+
+    /* Desain Kartu Utama */
+    .card {
+        width: 100%;
+        max-width: 380px;
+        aspect-ratio: 4/3;
+        border-radius: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    }
+
+    .card-blue { background-color: var(--card-blue); }
+    .card-pink { background-color: var(--card-pink); }
+
+    /* Tipografi Teks di dalam Kartu */
+    .text-story {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: 2.5rem;
+        color: #525252;
+    }
+
+    .text-lost-found {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2rem;
+        color: #525252;
+    }
+
+    .icon-container {
+        margin-bottom: 1rem;
+    }
+
+/*STORY*/
+    /* Gaya Kertas Sticky Note */
+    /* Gradasi Background */
+    .story-gradient {
+        background: radial-gradient(circle at center, var(--bg-blue)0%, var(--bg-blue) 50%, var(--bg-grey) 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
+    /* Font Khusus Judul */
+    .font-story {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+    }
+
+    /* Gaya Memo/Sticky Note */
+    .memo {
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .memo:hover {
+        transform: scale(1.05) rotate(0deg) !important;
+        z-index: 10;
+    }
+
+    .memo p {
+        color: #4a4a4a;
+        font-size: 1.25rem;
+        font-weight: 600;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Gaya Tombol Navigasi = */
+    .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .bar-story {
+        width: 35px;
+        height: 5px;
+        background-color: #0056b3;
+        border-radius: 10px;
+    }
+
+    /* Transisi untuk Script Scroll 
+    .nav-scrolled {
+        background-color: rgba(224, 242, 254, 0.9);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }*/
+
+/*ADDD STORY*/
+/* Font untuk Judul "Writing" 
+.font-writing {
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -1px;
+}
+
+/* Font untuk isi teks (seperti tulisan tangan) 
+.font-story {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+}
+
+/* Efek shadow halus untuk modal agar terlihat melayang 
+.shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Menghilangkan scrollbar pada textarea 
+textarea::-webkit-scrollbar {
+    display: none;
+}*/
+
+/*LOST N FOUND*/
+    /* Gradasi Radial Pink di Tengah */
+.lf-gradient {
+    background: radial-gradient(circle at center, #F9C7E3 0%, #F9C7E3 30%, #E0F2FE 100%);
+    background-attachment: fixed;
+}
+
+/* Tombol Filter */
+.filter-btn {
+    padding: 10px 25px;
+    border-radius: 20px;
+    background: white;
+    color: #A890A6;
+    font-weight: bold;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.filter-btn.active {
+    background: #A890A6;
+    color: white;
+}
+
+/* Kartu Barang */
+.item-card {
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.3s;
+}
+
+.item-card:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+}
+
+.status-tag {
+    width: fit-content;
+    padding: 2px 12px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Pastikan tombol utama selalu bisa diklik */
+#fab-main-btn {
+    cursor: pointer !important;
+    position: relative;
+}
+
+/* Munculkan menu */
+.menu-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important; /* Sangat Penting */
+}
+
+/* Munculkan overlay */
+.overlay-visible {
+    opacity: 1 !important;
+    pointer-events: auto !important; /* Sangat Penting */
+}
