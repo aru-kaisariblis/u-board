@@ -1,6 +1,3 @@
-
-const API_URL = 'http://localhost:3000/api';
-
 /* INDEX */
 
 
@@ -8,69 +5,6 @@ const API_URL = 'http://localhost:3000/api';
 const addBtn = document.getElementById('add-story-btn');
 const formOverlay = document.getElementById('form-overlay');
 const closeBtn = document.getElementById('close-btn');
-
-/* --- INTEGRASI BACKEND STORY --- */
-
-// 1. Load Data dari Server
-async function loadStories() {
-    try {
-        const res = await fetch(`${API_URL}/confess`);
-        const data = await res.json();
-        const container = document.getElementById('stories-container'); // Pastikan ID ini ada di HTML
-        
-        if(container) {
-            container.innerHTML = ''; // Reset container
-            const rotations = ['rotate-1', '-rotate-1', 'rotate-2', '-rotate-3'];
-            
-            data.forEach(item => {
-                const randomRot = rotations[Math.floor(Math.random() * rotations.length)];
-                const bgColor = item.color || '#FFF9C4'; // Default kuning
-
-                // Kita inject HTML sesuai desain temanmu
-                const html = `
-                    <div class="memo p-6 shadow-md rounded-sm transition-transform hover:scale-105 ${randomRot} flex flex-col justify-between min-h-[200px]" style="background-color: ${bgColor};">
-                        <div>
-                            <small class="block text-black/40 font-bold mb-2 uppercase border-b border-black/10 pb-1">To: ${item.recipient}</small>
-                            <p class="text-gray-800 font-serif text-lg">"${item.pesan}"</p>
-                        </div>
-                        <div class="text-right mt-4">
-                            <span class="text-xs font-bold text-gray-500">- ${item.sender}</span>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += html;
-            });
-        }
-    } catch (err) { console.error("Gagal load story:", err); }
-}
-
-// 2. Submit Story Baru
-const storyForm = document.getElementById('story-form'); // Pastikan ID form di HTML 'story-form'
-if(storyForm) {
-    storyForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Ambil data
-        const sender = document.getElementById('inputSender').value;
-        const recipient = document.getElementById('inputRecipient').value;
-        const message = document.getElementById('inputMessage').value;
-        const color = document.querySelector('input[name="color"]:checked')?.value || '#FFF9C4';
-
-        await fetch(`${API_URL}/confess`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pesan: message, sender, recipient, color })
-        });
-
-        alert("Berhasil curhat!");
-        e.target.reset();
-        document.getElementById('form-overlay').classList.add('hidden'); // Tutup modal pakai ID temanmu
-        loadStories(); // Refresh data
-    });
-}
-
-// Panggil saat web dibuka
-loadStories();
 
 // Buka Modal
 if (addBtn && formOverlay) {
@@ -88,48 +22,6 @@ if (addBtn && formOverlay) {
         if (e.target === formOverlay) formOverlay.classList.add('hidden');
     });
 }
-
-/*detail post*/
-const detailModal = document.getElementById('detail-modal');
-const closeDetail = document.getElementById('close-detail');
-
-// Fungsi untuk membuka detail
-function openDetail(card) {
-    const name = card.querySelector('p').innerText;
-    const location = card.querySelector('span').innerText;
-    const status = card.classList.contains('found') ? 'Found' : 'Lost';
-    const statusBg = card.classList.contains('found') ? '#4ade80' : '#f87171';
-    
-    // Sinkronisasi Data ke Modal
-    document.getElementById('detail-name').innerText = name;
-    document.getElementById('detail-location').querySelector('span').innerText = location;
-    document.getElementById('detail-status').innerText = status;
-    document.getElementById('detail-status').style.backgroundColor = statusBg;
-    
-    // Ambil deskripsi (Misal: dari atribut data atau teks default)
-    document.getElementById('detail-desc').innerText = "Kontak & Detail: Silakan cek informasi yang tertera di sini. " + (status === 'Lost' ? "Bagi yang menemukan hubungi nomor di atas." : "Bagi pemilik sah silakan hubungi nomor di atas.");
-    
-    document.getElementById('detail-img').src = "https://via.placeholder.com/400"; 
-
-    detailModal.classList.remove('hidden');
-}
-
-// Tambahkan event listener ke semua kartu yang ada
-document.addEventListener('click', (e) => {
-    const card = e.target.closest('.item-card');
-    if (card) {
-        openDetail(card);
-    }
-});
-
-// Tutup modal
-if (closeDetail) {
-    closeDetail.addEventListener('click', () => detailModal.classList.add('hidden'));
-}
-
-detailModal.addEventListener('click', (e) => {
-    if (e.target === detailModal) detailModal.classList.add('hidden');
-});
 
 /* LOST & FOUND */
 function filterItems(category) {
@@ -159,41 +51,54 @@ function filterItems(category) {
     });
 }
 
-/* --- SUBMIT FORM LOST & FOUND --- */
-// Pastikan form di dalam modal input punya ID="item-form"
-const itemForm = document.getElementById('item-form'); 
+/*detail post*/
+const detailModal = document.getElementById('detail-modal');
+const closeDetail = document.getElementById('close-detail');
 
-if(itemForm) {
-    itemForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+// Fungsi untuk membuka detail
+function openDetail(card) {
+    const name = card.querySelector('p').innerText;
+    // Mengambil lokasi
+    const location = card.querySelector('span.text-sm').innerText;
+    // MENGAMBIL WAKTU (Cari span yang ada di dalam div bawah)
+    const time = card.querySelector('.font-mono')?.innerText || "Waktu tidak tersedia";
+    
+    const status = card.classList.contains('found') ? 'Found' : 'Lost';
+    const statusBg = card.classList.contains('found') ? '#4ade80' : '#f87171';
+    
+    // Sinkronisasi Data ke Modal
+    document.getElementById('detail-name').innerText = name;
+    document.getElementById('detail-location').querySelector('span').innerText = location;
+    
+    // MASUKKAN WAKTU KE MODAL
+    document.getElementById('detail-time').querySelector('span').innerText = time;
+    
+    document.getElementById('detail-status').innerText = status;
+    document.getElementById('detail-status').style.backgroundColor = statusBg;
+    
+    document.getElementById('detail-desc').innerText = "Kontak & Detail: Silakan cek informasi yang tertera di sini. " + (status === 'Lost' ? "Bagi yang menemukan hubungi nomor di atas." : "Bagi pemilik sah silakan hubungi nomor di atas.");
+    
+    document.getElementById('detail-img').src = "https://via.placeholder.com/400"; 
 
-        // Siapkan FormData (karena ada upload foto)
-        const formData = new FormData(itemForm);
-        
-        // Cek tipe (Lost/Found) dari judul modal yang diset temanmu
-        const typeTitle = document.getElementById('modal-form-title').innerText;
-        // Map "Lost" -> "HILANG", "Found" -> "DITEMUKAN"
-        const statusValue = (typeTitle === 'Lost') ? 'HILANG' : 'DITEMUKAN';
-        
-        formData.append('status', statusValue); 
-        // Pastikan di HTML input name="nama", name="kontak", name="foto_barang" sudah benar
-
-        try {
-            await fetch(`${API_URL}/items`, {
-                method: 'POST',
-                body: formData
-            });
-
-            alert("Postingan berhasil!");
-            closeForm(); // Panggil fungsi tutup modal temanmu
-            itemForm.reset(); // Kosongkan form
-            loadItems(); // Refresh grid barang
-        } catch (err) {
-            console.error(err);
-            alert("Gagal posting");
-        }
-    });
+    detailModal.classList.remove('hidden');
 }
+
+// Tambahkan event listener ke semua kartu yang ada
+document.addEventListener('click', (e) => {
+    const card = e.target.closest('.item-card');
+    if (card) {
+        openDetail(card);
+    }
+});
+
+// Tutup modal
+if (closeDetail) {
+    closeDetail.addEventListener('click', () => detailModal.classList.add('hidden'));
+}
+
+detailModal.addEventListener('click', (e) => {
+    if (e.target === detailModal) detailModal.classList.add('hidden');
+});
 
 /*searching logic*/
 const searchInput = document.getElementById('search-input');
@@ -270,85 +175,44 @@ inputModal.addEventListener('click', (e) => {
 // Pastikan overlay FAB juga bisa menutup FAB
 fabOverlay?.addEventListener('click', closeFab);
 
-/* --- INTEGRASI BACKEND LOST & FOUND --- */
+/*waktu post
+/* --- LOGIKA POSTING & TIMESTAMP --- */
+const lfPostForm = document.getElementById('lf-post-form');
 
-async function loadItems() {
-    try {
-        const res = await fetch(`${API_URL}/items`);
-        const data = await res.json();
-        const container = document.getElementById('lost-found-container'); // Pastikan ID ini ada di HTML Grid kamu
+lfPostForm?.addEventListener('submit', (e) => {
+    e.preventDefault(); 
 
-        if(container) {
-            container.innerHTML = ''; // Bersihkan dummy
-
-            data.forEach(item => {
-                // Tentukan class 'lost' atau 'found' biar Filter temanmu jalan
-                const categoryClass = item.status === 'HILANG' ? 'lost' : 'found';
-                const statusColor = item.status === 'HILANG' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600';
-                
-                // Gunakan foto dari server atau placeholder
-                const imgUrl = item.foto ? `http://localhost:3000${item.foto}` : 'https://via.placeholder.com/150';
-
-                // Render HTML Card (Struktur disesuaikan biar fungsi openDetail temanmu jalan)
-                // Perhatikan: Kita simpan data kontak di atribut 'data-contact' biar gampang diambil
-                const html = `
-                    <div class="item-card ${categoryClass} bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer flex flex-col gap-3"
-                         onclick="openDetailBackend(this)" 
-                         data-name="${item.nama}"
-                         data-status="${item.status}"
-                         data-contact="${item.kontak}"
-                         data-img="${imgUrl}"
-                         data-date="${item.tanggal}">
-                        
-                        <div class="relative h-40 w-full overflow-hidden rounded-lg">
-                            <img src="${imgUrl}" class="w-full h-full object-cover">
-                            <span class="absolute top-2 right-2 px-2 py-1 rounded text-xs font-bold ${statusColor}">
-                                ${item.status}
-                            </span>
-                        </div>
-                        
-                        <div>
-                            <p class="font-bold text-lg text-gray-800">${item.nama}</p>
-                            <span class="text-sm text-gray-400">📅 ${item.tanggal}</span>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += html;
-            });
-        }
-    } catch (err) { console.error("Gagal load items:", err); }
-}
-
-// Kita buat fungsi Open Detail versi Upgrade (Biar datanya akurat dari backend)
-// Fungsi ini akan menimpa logika openDetail temanmu yang mengandalkan innerText
-function openDetailBackend(card) {
-    const modal = document.getElementById('detail-modal');
+    // Ambil input berdasarkan ID yang baru kita tambahkan di HTML
+    const itemName = document.getElementById('input-item-name').value;
+    const itemLocation = document.getElementById('input-item-location').value;
+    const itemType = document.getElementById('modal-form-title').innerText; 
     
-    // Ambil data dari atribut data- yang kita tempel di atas
-    const name = card.getAttribute('data-name');
-    const status = card.getAttribute('data-status');
-    const contact = card.getAttribute('data-contact');
-    const img = card.getAttribute('data-img');
-    const date = card.getAttribute('data-date');
+    // Buat waktu sekarang
+    const now = new Date();
+    const timeString = now.toLocaleDateString('id-ID', { 
+        day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' 
+    });
 
-    // Isi ke Modal
-    document.getElementById('detail-name').innerText = name;
-    document.getElementById('detail-status').innerText = status;
-    document.getElementById('detail-status').style.backgroundColor = status === 'HILANG' ? '#f87171' : '#4ade80';
-    document.getElementById('detail-img').src = img;
+    const grid = document.getElementById('items-grid');
+    const newCard = document.createElement('div');
     
-    // Deskripsi lebih lengkap
-    const descText = status === 'HILANG' 
-        ? `Barang ini hilang pada tanggal ${date}. Jika menemukan, tolong hubungi:` 
-        : `Barang ini ditemukan pada tanggal ${date}. Pemilik bisa menghubungi:`;
-    
-    document.getElementById('detail-desc').innerHTML = `
-        <p>${descText}</p>
-        <p class="mt-2 font-bold text-xl text-blue-600">📞 ${contact}</p>
+    const statusColor = itemType === 'Lost' ? 'bg-red-400' : 'bg-green-400';
+    const randomRotation = Math.floor(Math.random() * 5) - 2; 
+
+    newCard.className = `item-card bg-white ${itemType.toLowerCase()} flex flex-col`;
+    newCard.style.transform = `rotate(${randomRotation}deg)`;
+
+    // Template kartu yang memiliki Timestamp
+    newCard.innerHTML = `
+        <div class="status-tag ${statusColor} text-white">${itemType}</div>
+        <p class="text-xl font-semibold">${itemName}</p>
+        <span class="text-sm text-gray-500">Lokasi: ${itemLocation}</span>
+        <div class="mt-auto pt-2 border-t border-dashed border-gray-100">
+            <span class="text-[10px] text-gray-400 font-mono italic">🕒 ${timeString}</span>
+        </div>
     `;
 
-    modal.classList.remove('hidden');
-}
-
-// Panggil loadItems saat web dibuka
-loadItems();
+    grid.prepend(newCard); // Tambahkan ke mading
+    closeForm();           // Tutup modal
+    lfPostForm.reset();    // Kosongkan form
+});
