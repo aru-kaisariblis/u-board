@@ -1,5 +1,27 @@
 
 const API_URL = 'http://localhost:3000/api';
+/* --- LOGIKA HIDE ON SCROLL --- */
+let lastScrollTop = 0;
+const navbar = document.getElementById('main-nav');
+
+window.addEventListener('scroll', function() {
+    // Ambil posisi scroll saat ini
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Kecepatan scroll minimal sebelum bereaksi (misal: 10px)
+    if (Math.abs(lastScrollTop - scrollTop) <= 10) return;
+
+    if (scrollTop > lastScrollTop && scrollTop > 50) {
+        // Jika Scroll ke Bawah DAN posisi sudah lewat 50px -> Sembunyikan
+        navbar.classList.add('nav-hidden');
+    } else {
+        // Jika Scroll ke Atas -> Munculkan Kembali
+        navbar.classList.remove('nav-hidden');
+    }
+    
+    // Simpan posisi terakhir, pastikan tidak negatif (untuk Safari/iOS)
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+}, { passive: true }); // Menggunakan passive true untuk performa yang lebih baik
 
 /* INDEX */
 
