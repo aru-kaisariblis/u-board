@@ -1,7 +1,5 @@
 # Sudut Kampus : Campus Digital Bulletin Board
 
-![U-Board Banner](https://via.placeholder.com/1000x300?text=U-Board+Preview+Image)
-
 **Sudut Kampus** adalah aplikasi mading digital berbasis web yang dirancang untuk komunitas kampus. Platform ini memiliki dua fitur utama: **Menfess (Confessions)** untuk pesan anonim, dan **Lost & Found** untuk melaporkan barang hilang atau ditemukan.
 
 Dibangun dengan **Node.js** dan **Vanilla JS**, proyek ini menggunakan sistem database berbasis file (JSON) sehingga ringan dan mudah dijalankan tanpa perlu menginstall software database tambahan (seperti MySQL/Mongo).
