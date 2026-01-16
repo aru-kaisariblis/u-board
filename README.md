@@ -45,7 +45,7 @@ Pastikan kamu sudah menginstall **Node.js** di komputermu.
 
 1.  **Clone Repository ini**
     ```bash
-    git clone [https://github.com/username-kamu/u-board.git](https://github.com/username-kamu/u-board.git)
+    git clone https://github.com/aru-kaisariblis/SudutKampus
     cd u-board
     ```
 
