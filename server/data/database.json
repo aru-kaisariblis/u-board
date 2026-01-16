@@ -1,36 +1,13 @@
 {
   "confessions": [
     {
-      "id": 1768130678132,
-      "pesan": "Siap mati muda dek?",
-      "sender": "RajaIblis",
-      "recipient": "Pahlawan",
-      "color": "#FFF9C4",
-      "tanggal": "11/1/2026"
-    },
-    {
-      "id": 1768130731088,
-      "pesan": "Siap mati muda dek?",
+      "id": 1768491565046,
+      "pesan": "mole man",
       "sender": "kaisar kegelapan",
-      "recipient": "gumi",
+      "recipient": "Ana ana",
       "color": "#FFF9C4",
-      "tanggal": "11/1/2026"
-    },
-    {
-      "id": 1768130770547,
-      "pesan": "Mole decks",
-      "sender": "Arung",
-      "recipient": "Everyone",
-      "color": "#C3E2FF",
-      "tanggal": "11/1/2026"
-    },
-    {
-      "id": 1768166100107,
-      "pesan": "luffy dmn skrng?\n",
-      "sender": "ikanlari",
-      "recipient": "one piece",
-      "color": "#FFF9C4",
-      "tanggal": "11/1/2026"
+      "tanggal": "15/1/2026",
+      "createdAt": 1768491565144
     }
   ],
   "items": []
