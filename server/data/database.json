@@ -1,4 +1,101 @@
 {
+<<<<<<< HEAD
   "confessions": [],
   "items": []
+=======
+  "confessions": [
+    {
+      "id": 1768491565046,
+      "pesan": "mole man",
+      "sender": "kaisar kegelapan",
+      "recipient": "Ana ana",
+      "color": "#FFF9C4",
+      "tanggal": "15/1/2026",
+      "createdAt": 1768491565144
+    },
+    {
+      "id": 1768745618173,
+      "pesan": "jgn terlalu baik",
+      "sender": "ikanlari",
+      "recipient": "deku",
+      "color": "#FFF9C4",
+      "tanggal": "18/1/2026",
+      "createdAt": 1768745618337
+    },
+    {
+      "id": 1768745667244,
+      "pesan": "mugiwara udh sampai mana?",
+      "sender": "nakama",
+      "recipient": "one piece",
+      "color": "#C2F0C2",
+      "tanggal": "18/1/2026",
+      "createdAt": 1768745667244
+    },
+    {
+      "id": 1768745875703,
+      "pesan": "jdi jringan jgn terlalu mahal",
+      "sender": "axis",
+      "recipient": "telkomsel",
+      "color": "#FFF9C4",
+      "tanggal": "18/1/2026",
+      "createdAt": 1768745875703
+    },
+    {
+      "id": 1768745916401,
+      "pesan": "SEMANGAAATT",
+      "sender": "noname",
+      "recipient": "anak infor",
+      "color": "#E1BEE7",
+      "tanggal": "18/1/2026",
+      "createdAt": 1768745916401
+    },
+    {
+      "id": 1768747623929,
+      "pesan": "I LIKE IT",
+      "sender": "noname",
+      "recipient": "gdgoc",
+      "color": "#C3E2FF",
+      "tanggal": "18/1/2026",
+      "createdAt": 1768747623929
+    }
+  ],
+  "items": [
+    {
+      "id": 1768746686175,
+      "nama": "nakama",
+      "status": "HILANG",
+      "kontak": "85166150559",
+      "lokasi": "egghead",
+      "deskripsi": "white and strong",
+      "password": "123456",
+      "isResolved": true,
+      "foto": "/uploads/foto_barang-1768746685780-910733083.jpg",
+      "tanggal": "18 Jan, 06.31"
+    },
+    {
+      "id": 1768747418123,
+      "nama": "gear 5",
+      "status": "DITEMUKAN",
+      "kontak": "85166150559",
+      "lokasi": "egghead",
+      "deskripsi": "white and strong, gomu",
+      "password": "123456",
+      "isResolved": false,
+      "foto": "/uploads/foto_barang-1768747418067-224488210.jpg",
+      "tanggal": "18 Jan, 06.43"
+    },
+    {
+      "id": 1768747569646,
+      "nama": "semangat",
+      "status": "HILANG",
+      "kontak": "85166150559",
+      "lokasi": "makassar",
+      "deskripsi": "motivasi",
+      "password": "777777",
+      "isResolved": false,
+      "foto": "/uploads/foto_barang-1768747569570-952386753.jpg",
+      "tanggal": "18 Jan, 06.46"
+    }
+  ]
+>>>>>>> 42b0edd91ca0e03fb19fb4d283ad84ddf544d777
 }

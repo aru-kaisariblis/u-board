@@ -1,32 +1,29 @@
-
 const API_URL = 'http://localhost:3000/api';
-/* --- LOGIKA HIDE ON SCROLL --- */
+
+/* LOGIKA HIDE ON SCROLL 
+   ---------------------- */
 let lastScrollTop = 0;
 const navbar = document.getElementById('main-nav');
 
 window.addEventListener('scroll', function() {
-    // Ambil posisi scroll saat ini
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Kecepatan scroll minimal sebelum bereaksi (misal: 10px)
     if (Math.abs(lastScrollTop - scrollTop) <= 10) return;
 
     if (scrollTop > lastScrollTop && scrollTop > 50) {
-        // Jika Scroll ke Bawah DAN posisi sudah lewat 50px -> Sembunyikan
         navbar.classList.add('nav-hidden');
     } else {
-        // Jika Scroll ke Atas -> Munculkan Kembali
         navbar.classList.remove('nav-hidden');
     }
-    
-    // Simpan posisi terakhir, pastikan tidak negatif (untuk Safari/iOS)
+
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
-}, { passive: true }); // Menggunakan passive true untuk performa yang lebih baik
+}, { passive: true });
 
-/* INDEX */
+/* INDEX 
+   ---------------------- */
+//tidak ada
 
-
-/* STORY */
+/* STORY 
+   ---------------------- */
 const addBtn = document.getElementById('add-story-btn');
 const formOverlay = document.getElementById('form-overlay');
 const closeBtn = document.getElementById('close-btn');
@@ -38,7 +35,7 @@ async function loadStories() {
     try {
         const res = await fetch(`${API_URL}/confess`);
         const data = await res.json();
-        const container = document.getElementById('stories-container'); // Pastikan ID ini ada di HTML
+        const container = document.getElementById('stories-container');
         
         if(container) {
             container.innerHTML = ''; // Reset container
@@ -46,9 +43,9 @@ async function loadStories() {
             
             data.forEach(item => {
                 const randomRot = rotations[Math.floor(Math.random() * rotations.length)];
-                const bgColor = item.color || '#FFF9C4'; // Default kuning
+                const bgColor = item.color || '#FFF9C4'; 
 
-                // Kita inject HTML sesuai desain temanmu
+                // inject html
                 const html = `
                     <div class="memo p-6 shadow-md rounded-sm transition-transform hover:scale-105 ${randomRot} flex flex-col justify-between min-h-[200px]" style="background-color: ${bgColor};">
                         <div>
@@ -67,7 +64,7 @@ async function loadStories() {
 }
 
 // 2. Submit Story Baru
-const storyForm = document.getElementById('story-form'); // Pastikan ID form di HTML 'story-form'
+const storyForm = document.getElementById('story-form');
 if(storyForm) {
     storyForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -91,46 +88,45 @@ if(storyForm) {
     });
 }
 
-// Panggil saat web dibuka
 loadStories();
 
-// Buka Modal
 if (addBtn && formOverlay) {
     addBtn.addEventListener('click', () => {
         formOverlay.classList.remove('hidden');
     });
 
-// Tutup Modal
     closeBtn.addEventListener('click', () => {
         formOverlay.classList.add('hidden');
     });
 
-// Tutup Modal jika klik area hitam di luar form
     formOverlay.addEventListener('click', (e) => {
         if (e.target === formOverlay) formOverlay.classList.add('hidden');
     });
 }
 
-/* LOST & FOUND */
+/* LOST & FOUND
+   ---------------------- */
+   //Filter
 function filterItems(category) {
-    const cards = document.querySelectorAll('.item-card');
     const buttons = document.querySelectorAll('.filter-btn');
-
-    // Update tampilan tombol aktif
+    
     buttons.forEach(btn => {
-        if (btn.innerText.toLowerCase() === category) {
+        const btnText = btn.innerText.toLowerCase();
+
+        if (btn.getAttribute('onclick').includes(`'${category}'`)) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
         }
     });
 
-    // Logika Filter
+    const cards = document.querySelectorAll('.item-card');
     cards.forEach(card => {
+        const itemStatus = card.getAttribute('data-status'); 
         if (category === 'all') {
             card.style.display = 'flex';
         } else {
-            if (card.classList.contains(category)) {
+            if (itemStatus === category) {
                 card.style.display = 'flex';
             } else {
                 card.style.display = 'none';
@@ -139,13 +135,7 @@ function filterItems(category) {
     });
 }
 
-/*detail post*/
-const detailModal = document.getElementById('detail-modal');
-const closeDetail = document.getElementById('close-detail');
-
-// Fungsi untuk membuka detail
-/* --- UPDATE FUNGSI DETAIL (VERSI WHATSAPP) --- */
-// Helper: Format 0812 jadi 62812
+//whatsapp
 function formatWhatsApp(number) {
     if (!number) return '';
     let cleaned = number.toString().replace(/\D/g, '');
@@ -153,15 +143,10 @@ function formatWhatsApp(number) {
     return cleaned;
 }
 
-// Tambahkan event listener ke semua kartu yang ada
-document.addEventListener('click', (e) => {
-    const card = e.target.closest('.item-card');
-    if (card) {
-        openDetail(card);
-    }
-});
+//Detail frontend
+const detailModal = document.getElementById('detail-modal');
+const closeDetail = document.getElementById('close-detail');
 
-// Tutup modal
 if (closeDetail) {
     closeDetail.addEventListener('click', () => detailModal.classList.add('hidden'));
 }
@@ -171,7 +156,6 @@ detailModal.addEventListener('click', (e) => {
 });
 
 /* --- SUBMIT FORM LOST & FOUND --- */
-// Pastikan form di dalam modal input punya ID="item-form"
 const itemForm = document.getElementById('item-form'); 
 
 if(itemForm) {
@@ -180,14 +164,12 @@ if(itemForm) {
 
         // Siapkan FormData (karena ada upload foto)
         const formData = new FormData(itemForm);
-        
-        // Cek tipe (Lost/Found) dari judul modal yang diset temanmu
+
         const typeTitle = document.getElementById('modal-form-title').innerText;
         // Map "Lost" -> "HILANG", "Found" -> "DITEMUKAN"
         const statusValue = (typeTitle === 'Lost') ? 'HILANG' : 'DITEMUKAN';
         
         formData.append('status', statusValue); 
-        // Pastikan di HTML input name="nama", name="kontak", name="foto_barang" sudah benar
 
         try {
             await fetch(`${API_URL}/items`, {
@@ -206,16 +188,16 @@ if(itemForm) {
     });
 }
 
-/*searching logic*/
+//Search
 const searchInput = document.getElementById('search-input');
 
 if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-        const keyword = e.target.value.toLowerCase(); // Ambil teks input
-        const cards = document.querySelectorAll('.item-card'); // Ambil semua kartu mading
+        const keyword = e.target.value.toLowerCase();
+        const cards = document.querySelectorAll('.item-card');
 
         cards.forEach(card => {
-            const itemName = card.querySelector('p').innerText.toLowerCase(); // Ambil nama barang di kartu
+            const itemName = card.querySelector('p').innerText.toLowerCase();
             
             // Jika nama barang cocok dengan kata kunci, tampilkan. Jika tidak, sembunyikan.
             if (itemName.includes(keyword)) {
@@ -226,26 +208,24 @@ if (searchInput) {
         });
     });
 }
-/*+add button logic*/
-/* --- FAB & INPUT MODAL LOGIC --- */
+
+
+//ADD button
 const mainBtn = document.getElementById('fab-main-btn');
 const fabMenu = document.getElementById('fab-menu');
 const fabOverlay = document.getElementById('fab-overlay');
 const fabIcon = document.getElementById('fab-icon');
 const inputModal = document.getElementById('input-modal');
-const mainNav = document.getElementById('main-nav'); // Ambil elemen navbar
+const mainNav = document.getElementById('main-nav');
 
-// Fungsi menutup FAB
 function closeFab() {
     fabMenu.classList.remove('menu-visible');
     fabOverlay.classList.remove('overlay-visible');
     fabIcon.style.transform = 'rotate(0deg)';
-    
-    // HAPUS efek blur pada navbar saat menu tutup
+
     mainNav.style.filter = 'none'; 
 }
 
-// Klik tombol +
 mainBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     const isOpen = fabMenu.classList.contains('menu-visible');
@@ -253,18 +233,15 @@ mainBtn?.addEventListener('click', (e) => {
         fabMenu.classList.add('menu-visible');
         fabOverlay.classList.add('overlay-visible');
         fabIcon.style.transform = 'rotate(45deg)';
-        
-        // TAMBAHKAN efek blur pada navbar saat menu terbuka
+
         mainNav.style.filter = 'blur(5px)'; 
     } else {
         closeFab();
     }
 });
 
-// Fungsi Membuka Form (Dipanggil dari atribut onclick di HTML)
+// Buka form 
 function openForm(type) {
-    // Jika ingin navbar tetap blur saat form dibuka, biarkan saja.
-    // Jika ingin navbar normal kembali saat form terbuka, tambahkan line ini:
     mainNav.style.filter = 'none'; 
 
     closeFab(); 
@@ -275,18 +252,15 @@ function openForm(type) {
     inputModal.classList.remove('hidden');
 }
 
-// Pastikan di closeForm juga navbar kembali normal
 function closeForm() {
     inputModal.classList.add('hidden');
-    mainNav.style.filter = 'none'; // Kembalikan navbar ke kondisi normal
+    mainNav.style.filter = 'none';
 }
 
-// Tutup modal jika klik di area blur (luar form)
 inputModal.addEventListener('click', (e) => {
     if (e.target === inputModal) closeForm();
 });
 
-// Pastikan overlay FAB juga bisa menutup FAB
 fabOverlay?.addEventListener('click', closeFab);
 
 /* --- INTEGRASI BACKEND LOST & FOUND --- */
@@ -313,7 +287,7 @@ async function loadItems() {
                 const deskripsi = item.deskripsi || 'Tidak ada deskripsi.';
                 const kontak = item.kontak || '';
 
-                // HTML KARTU (Dengan atribut data- lengkap)
+                // HTML kartu
                 const html = `
                     <div class="item-card ${categoryClass} bg-white flex flex-col p-4 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer"
                          onclick="openDetailBackend(this)"
@@ -349,15 +323,11 @@ async function loadItems() {
     } catch (err) { console.error("Gagal load items:", err); }
 }
 
-// Kita buat fungsi Open Detail versi Upgrade (Biar datanya akurat dari backend)
-// Fungsi ini akan menimpa logika openDetail temanmu yang mengandalkan innerText
-// --- UPDATE FUNGSI INI DI js/app.js ---
+// open detail up backend
 
 function openDetailBackend(card) {
     const modal = document.getElementById('detail-modal');
-    
-    // 1. Ambil Data dari Atribut HTML
-    // Pastikan di loadItems() kamu sudah menambahkan data-id="${item.id}"
+
     const id = card.getAttribute('data-id'); 
     const name = card.getAttribute('data-name');
     const status = card.getAttribute('data-status');
@@ -365,7 +335,6 @@ function openDetailBackend(card) {
     const img = card.getAttribute('data-img');
     const date = card.getAttribute('data-date');
 
-    // 2. Isi ke Modal HTML
     document.getElementById('detail-name').innerText = name;
     
     // Set Status Badge
@@ -377,14 +346,13 @@ function openDetailBackend(card) {
     
     document.getElementById('detail-img').src = img;
     
-    // Set Lokasi & Waktu (Opsional jika elemen ada)
+    // Set Lokasi & Waktu
     const locElem = document.getElementById('detail-location');
     if(locElem) locElem.querySelector('span').innerText = card.getAttribute('data-location') || '-';
 
     const timeElem = document.getElementById('detail-time');
     if(timeElem) timeElem.querySelector('span').innerText = date;
 
-    // 3. Render Deskripsi & TOMBOL HAPUS
     const descText = status === 'HILANG' 
         ? `Barang ini hilang pada tanggal ${date}. Jika menemukan, tolong hubungi:` 
         : `Barang ini ditemukan pada tanggal ${date}. Pemilik bisa menghubungi:`;
@@ -397,9 +365,7 @@ function openDetailBackend(card) {
         waLink = `https://wa.me/${cleanNum}`;
     }
 
-    // 👇 BAGIAN PENTING: MENAMPILKAN TOMBOL HAPUS 👇
-    // 👇 UPDATE BAGIAN INI AGAR TOMBOLNYA CANTIK 👇
-    // 👇 GANTI BAGIAN INI DI js/app.js 👇
+    // tombol hapus
     document.getElementById('detail-desc').innerHTML = `
         <div class="flex flex-col gap-3">
             <p class="italic text-gray-600 text-lg leading-relaxed">"${card.getAttribute('data-desc')}"</p>
@@ -431,7 +397,6 @@ function openDetailBackend(card) {
     modal.classList.remove('hidden');
 }
 
-// Panggil loadItems saat web dibuka
 loadItems();
 
 /* --- INTEGRASI: POSTING BARANG --- */
@@ -441,17 +406,14 @@ if (postForm) {
     postForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // 1. Ambil semua data dari input form
         const formData = new FormData(postForm);
 
-        // 2. Tambahkan status manual
         const typeTitle = document.getElementById('modal-form-title').innerText;
         const statusValue = (typeTitle === 'Lost') ? 'HILANG' : 'DITEMUKAN';
         formData.append('status', statusValue); 
 
         // ============================================================
-        // 🔴 CCTV / DEBUGGING (Tambahan Penting)
-        // Kode ini akan mencetak isi paket data ke Console Browser
+        // Kode ini mencetak isi paket data ke Console Browser (cctv)
         console.log("=== SEDANG MENGIRIM DATA ===");
         let isDataEmpty = true;
         for (let pair of formData.entries()) {
@@ -466,7 +428,6 @@ if (postForm) {
         // ============================================================
 
         try {
-            // 3. Kirim ke Server
             const response = await fetch(`${API_URL}/items`, {
                 method: 'POST',
                 body: formData
@@ -474,9 +435,9 @@ if (postForm) {
 
             if (response.ok) {
                 alert("Berhasil memposting barang! 🎉");
-                closeForm();      // Tutup modal
-                postForm.reset(); // Bersihkan form
-                loadItems();      // Refresh tampilan otomatis
+                closeForm();
+                postForm.reset();
+                loadItems();
             } else {
                 alert("Gagal posting, cek koneksi server.");
             }
@@ -490,13 +451,11 @@ if (postForm) {
 
 /* --- LOGIKA HAPUS BARANG --- */
 async function deleteItem(id) {
-    // 1. Minta Password ke User pakai Prompt sederhana
     const password = prompt("Masukkan password yang kamu buat saat memposting barang ini:");
 
-    if (!password) return; // Kalau batal/kosong, stop.
+    if (!password) return;
 
     try {
-        // 2. Kirim Request ke Server
         const res = await fetch(`${API_URL}/items/${id}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -507,10 +466,10 @@ async function deleteItem(id) {
 
         if (res.ok) {
             alert("✅ " + result.message);
-            document.getElementById('detail-modal').classList.add('hidden'); // Tutup modal
-            loadItems(); // Refresh grid (barang akan hilang)
+            document.getElementById('detail-modal').classList.add('hidden');
+            loadItems();
         } else {
-            alert("❌ Gagal: " + result.message); // Password salah dll
+            alert("❌ Gagal: " + result.message);
         }
 
     } catch (err) {
