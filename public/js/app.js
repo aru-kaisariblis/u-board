@@ -20,6 +20,7 @@ window.addEventListener('scroll', function() {
 
 /* INDEX 
    ---------------------- */
+//tidak ada
 
 /* STORY 
    ---------------------- */
@@ -105,24 +106,27 @@ if (addBtn && formOverlay) {
 
 /* LOST & FOUND
    ---------------------- */
+   //Filter
 function filterItems(category) {
-    const cards = document.querySelectorAll('.item-card');
     const buttons = document.querySelectorAll('.filter-btn');
-
+    
     buttons.forEach(btn => {
-        if (btn.innerText.toLowerCase() === category) {
+        const btnText = btn.innerText.toLowerCase();
+
+        if (btn.getAttribute('onclick').includes(`'${category}'`)) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
         }
     });
 
-    //Filter
+    const cards = document.querySelectorAll('.item-card');
     cards.forEach(card => {
+        const itemStatus = card.getAttribute('data-status'); 
         if (category === 'all') {
             card.style.display = 'flex';
         } else {
-            if (card.classList.contains(category)) {
+            if (itemStatus === category) {
                 card.style.display = 'flex';
             } else {
                 card.style.display = 'none';
@@ -130,10 +134,6 @@ function filterItems(category) {
         }
     });
 }
-
-//Detail
-const detailModal = document.getElementById('detail-modal');
-const closeDetail = document.getElementById('close-detail');
 
 //whatsapp
 function formatWhatsApp(number) {
@@ -143,12 +143,9 @@ function formatWhatsApp(number) {
     return cleaned;
 }
 
-document.addEventListener('click', (e) => {
-    const card = e.target.closest('.item-card');
-    if (card) {
-        openDetail(card);
-    }
-});
+//Detail frontend
+const detailModal = document.getElementById('detail-modal');
+const closeDetail = document.getElementById('close-detail');
 
 if (closeDetail) {
     closeDetail.addEventListener('click', () => detailModal.classList.add('hidden'));

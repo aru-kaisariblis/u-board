@@ -64,15 +64,15 @@ h1, h2, h3 { font-family: 'Poppins', sans-serif; }
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
 }
 
-/* 4. STORY PAGE (Mading Confess)
+/* 4. STORY PAGE
    ------------------------------ */
 .story-gradient {
     background: radial-gradient(circle at center, var(--bg-blue) 0%, var(--bg-blue) 50%, var(--bg-grey) 100%);
     background-attachment: fixed;
 }
 
-/* Grid Container Mading */
-#stories-container, #items-grid {
+/* Grid Mading */
+#stories-container {
     display: grid;
     gap: 1.5rem;
 }
@@ -142,15 +142,6 @@ h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 .item-card:hover {
     transform: scale(1.05) rotate(0deg) !important;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.status-tag {
-    width: fit-content;
-    padding: 2px 12px;
-    border-radius: 10px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    text-transform: uppercase;
 }
 
 /* 6. FAB (Floating Button) & MODAL SYSTEM
