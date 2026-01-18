@@ -78,18 +78,6 @@ Berikut adalah endpoint yang tersedia di Backend:
 | **POST** | `/api/items` | Posting barang baru (Support upload gambar). |
 | **DELETE** | `/api/items/:id` | Menghapus barang (Memerlukan body `{password}`). |
 
----
-
-## 📸 Screenshots
-
-*(Tempatkan screenshot fitur Menfess di sini)*
-> **Menfess Wall:** Tampilan pesan tempel yang interaktif.
-
-*(Tempatkan screenshot fitur Lost & Found di sini)*
-> **Lost & Found:** Detail barang dengan tombol WhatsApp dan Hapus.
-
----
-
 ## 🤝 Kontribusi
 
 Proyek ini dibuat untuk tujuan pembelajaran. Pull Request dipersilakan jika ingin menambahkan fitur seperti:
